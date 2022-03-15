@@ -1,21 +1,36 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Button, Flex, VStack } from "@chakra-ui/react";
 import { NextPage } from "next";
-import Camera from "src/components/camera";
-import Flow from "src/components/flow";
+import Link from "next/link";
 import Header from "src/components/header";
-import Register from "src/components/register";
 
 const Index: NextPage = () => {
   return (
     <Flex direction="column" w="full" h="100vh" px={8}>
       <Header title="MeerChat" />
-      <Flex pos="relative" w="full" direction="column">
-        <Box pos="absolute" top="0" left="0">
-          <Flow />
-        </Box>
-        <Camera />
-      </Flex>
-      <Register />
+      <VStack spacing={4} alignItems="left">
+        <Link href="/speaker">
+          <Button
+            w="36"
+            as="a"
+            colorScheme="teal"
+            variant="solid"
+            cursor="pointer"
+          >
+            スピーカー
+          </Button>
+        </Link>
+        <Link href="/audience">
+          <Button
+            w="36"
+            as="a"
+            colorScheme="teal"
+            variant="solid"
+            cursor="pointer"
+          >
+            オーディエンス
+          </Button>
+        </Link>
+      </VStack>
     </Flex>
   );
 };

@@ -11,7 +11,7 @@ MeerChat は、流れてくるコメントを"掴める"サービスです
 以下のコマンドを実行してクローンします。
 
 ```shell
-git clone https://github.com/dokosore/coviddashboard.git
+git clone https://github.com/dokosore/prt_meerchat.git
 ```
 
 ## 2. `npm install`

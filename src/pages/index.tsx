@@ -1,8 +1,9 @@
-import Flow from "@/components/flow";
 import { Box, Flex } from "@chakra-ui/react";
 import { NextPage } from "next";
 import Camera from "src/components/camera";
+import Flow from "src/components/flow";
 import Header from "src/components/header";
+import Register from "src/components/register";
 
 const Index: NextPage = () => {
   return (
@@ -14,6 +15,7 @@ const Index: NextPage = () => {
         </Box>
         <Camera />
       </Flex>
+      <Register />
     </Flex>
   );
 };

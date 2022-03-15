@@ -1,6 +1,13 @@
 import { Flex } from "@chakra-ui/react";
+import { useRecoilValue } from "recoil";
+import { textListState } from "src/atom/test";
 
 const Flow = () => {
+  const textList = useRecoilValue(textListState);
+
+  const _textList = textList.map((text) => {
+    return <p>{text}</p>;
+  });
   return (
     <Flex
       w="full"
@@ -10,12 +17,7 @@ const Flow = () => {
       fontWeight="700"
       fontSize="36"
     >
-      <p>テキストが流れます</p>
-      <p>テキストが流れます</p>
-      <p>テキストが流れます</p>
-      <p>テキストが流れます</p>
-      <p>テキストが流れます</p>
-      <p>テキストが流れます</p>
+      {_textList}
     </Flex>
   );
 };

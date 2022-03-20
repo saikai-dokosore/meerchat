@@ -1,36 +1,47 @@
-import { Button, Flex, VStack } from "@chakra-ui/react";
+import { Center, Flex, Input, VStack } from "@chakra-ui/react";
+import { Target } from "framer-motion";
 import { NextPage } from "next";
-import Link from "next/link";
-import Header from "src/components/header";
+import { useRouter } from "next/router";
 
 const Index: NextPage = () => {
+  const router = useRouter();
+  function invitationInput(event: Event) {
+    const input: Target = event.target as HTMLInputElement;
+    const invitation: String = input.value;
+    const nameend: number = invitation.indexOf("さんがあなたを");
+    const name: String = invitation.substring(0, nameend);
+    const topicstart: number = invitation.indexOf("トピック: ");
+    const topicend: number = invitation.indexOf("時間:", topicstart);
+    const topic: String = invitation.substring(topicstart + 5, topicend);
+    console.log(topicstart, topicend);
+    console.log(name, topic);
+  }
+  function createNewMeating() {
+    // addDoc(collection(db,"meetings"), {
+    //   name: "test",
+    //   createdAt: new Date(),
+    // });
+    router.push("/speaker");
+  }
   return (
-    <Flex direction="column" w="full" h="100vh" px={8}>
-      <Header title="MeerChat" />
-      <VStack spacing={4} alignItems="left">
-        <Link href="/speaker">
-          <Button
-            w="36"
-            as="a"
-            colorScheme="teal"
-            variant="solid"
-            cursor="pointer"
+    <Flex>
+      <Center>
+        <VStack>
+          <Input
+            placeholder="Paset Meeting invitation"
+            onChange={invitationInput}
+          />
+          {/* <Button
+            colorScheme="blue"
+            width="300px"
+            onClick={() => {
+              createNewMeating();
+            }}
           >
-            スピーカー
-          </Button>
-        </Link>
-        <Link href="/audience">
-          <Button
-            w="36"
-            as="a"
-            colorScheme="teal"
-            variant="solid"
-            cursor="pointer"
-          >
-            オーディエンス
-          </Button>
-        </Link>
-      </VStack>
+            Create MeerChat
+          </Button> */}
+        </VStack>
+      </Center>
     </Flex>
   );
 };

@@ -1,7 +1,24 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { NextPage } from "next";
+import {useRouter} from "next/router";
+import { useEffect, useState } from "react";
 
 const SpeakerDisplay: NextPage = () => {
+  const router = useRouter()
+  const [content , setContent] = useState("")
+  const [superchat,setSupperchat]= useState(0)
+  const [username,setUsername] = useState("")
+  useEffect(()=>{
+    if(router.isReady){
+      console.log(router.query)
+      setContent(router.query.content)
+      setSupperchat(router.query.superchat)
+      setUsername(router.query.username)
+    }
+  },[router]
+  )
+
+
   return (
     <Flex
       bg="red.400"
@@ -12,10 +29,13 @@ const SpeakerDisplay: NextPage = () => {
       justifyContent="center"
     >
       <Text fontSize="3xl" color="white" fontWeight="bold">
-        こんにちは
+        {content}
       </Text>
       <Text fontSize="xl" color="white">
-        ￥10,000
+        ￥{superchat}
+      </Text>
+      <Text fontSize="xl" color="white">
+        {username}
       </Text>
     </Flex>
   );

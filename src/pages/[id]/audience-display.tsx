@@ -1,5 +1,7 @@
 import {
+  Input,
   Button,
+  Box,
   Flex,
   Spacer,
   Text,
@@ -20,6 +22,8 @@ const AudienceDisplay: NextPage = () => {
   const router = useRouter();
   const Id: String = router.asPath.split("/")[1];
 
+  const randomname = Math.random().toString();
+
   useEffect(() => {
     document.getElementById("question")?.focus();
   }, []);
@@ -37,22 +41,44 @@ const AudienceDisplay: NextPage = () => {
     setComment(value);
   };
 
+  const [username, setUsername] = useState(randomname);
+
+  const inputusername = (e) => {
+    const value = e.target.value;
+    setUsername(value);
+  };
+
   const [superchat, setSuperchat] = useState(0);
 
   const inputsuperchat = (e) => {
-    const value = e.target.value;
-    setSuperchat(value);
-    console.log(value);
+
+    console.log(e.targe
+    )
+    if (e.target) {
+      const value = e.target.value;
+      setSuperchat(value);
+    }
   };
 
+  const [transferred, setTranseferred] = useState(false);
+
   const sendComment = () => {
-    addDoc(collection(db, "meeting", Id, "comment"), {
-      content: comment,
-      superchat: superchat,
-    }).then(() => {
-      setComment("");
-      setSuperchat(0);
-    });
+    console.log(comment, superchat);
+    if (comment != "" || superchat != 0) {
+      console.log(comment, superchat);
+      addDoc(collection(db, "meeting", Id, "comment"), {
+        content: comment,
+        superchat: superchat,
+        username: username,
+      }).then(() => {
+        console.log(222);
+        setComment("");
+        setSuperchat(0);
+        setTranseferred(true);
+        setTimeout(setTranseferred(false), 5000);
+        document.getElementById("super").value = 0;
+      });
+    }
   };
 
   return (
@@ -74,27 +100,43 @@ const AudienceDisplay: NextPage = () => {
           全ての質問
         </Button>
       </Flex>
+      <Input placeholder="UserName" onChange={inputusername} />
       <Textarea
         id="question"
+        value={comment}
         onChange={inputcomment}
         focusBorderColor="teal.400"
         placeholder="ここに質問を書いてね"
         borderColor="gray.300"
       />
-      <Text color="red">¥</Text>
-      <NumberInput step={100}>
-        <NumberInputField
+      <Flex>
+        <Text>SupperChat!!</Text>
+        <Spacer />
+        <Text color="red" fontSize="xl">
+          ¥
+        </Text>
+        <NumberInput
+          id="super"
+          step={100}
           placeholder="Supper Chat!!!"
+        >
+          <NumberInputField
+
           onChange={inputsuperchat}
-        />
-        <NumberInputStepper>
-          <NumberIncrementStepper />
-          <NumberDecrementStepper />
-        </NumberInputStepper>
-      </NumberInput>
-      <Button mt="2" colorScheme="teal">
-        送信
-      </Button>
+          />
+          <NumberInputStepper>
+            <NumberIncrementStepper />
+            <NumberDecrementStepper />
+          </NumberInputStepper>
+        </NumberInput>
+      </Flex>
+      {transferred ? (
+        <Box color="red">Success!!</Box>
+      ) : (
+        <Button mt="2" colorScheme="teal" onClick={sendComment}>
+          送信
+        </Button>
+      )}
     </Flex>
   );
 };

@@ -36,7 +36,7 @@ const Index: NextPage = () => {
        topic:topic
      }).then((docRef)=>{
         console.log(docRef.id)
-router.push("/speaker");
+router.push(docRef.id+"/speaker");
        })}
   return (
     <Flex>

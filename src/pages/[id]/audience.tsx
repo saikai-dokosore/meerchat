@@ -1,8 +1,11 @@
 import { Flex } from "@chakra-ui/react";
 import { NextPage } from "next";
+import {useRouter} from "next/router";
 import { useEffect, useState } from "react";
 
 const Audience: NextPage = () => {
+  const router =useRouter();                                                                                     
+  const Id:String = router.asPath.split("/")[1]
   const [smallWindow, setSmallWindow] = useState<Window>();
   const [smallWindowOpened, setSmallWindowOpened] = useState<boolean>(false);
   const openWindow = () => {
@@ -12,7 +15,7 @@ const Audience: NextPage = () => {
       const screenX = screen.width - width - 16;
       const screenY = screen.height - height - 64;
       const _smallWindow = window.open(
-        "http://localhost:3000/audience-display/",
+        "http://localhost:3000/"+Id+"/audience-display/",
         "audience",
         `width=${width},height=${height},screenY=${screenY},screenX=${screenX},toolbar=no,menubar=no,scrollbars=no`
       );
@@ -24,13 +27,13 @@ const Audience: NextPage = () => {
 
   useEffect(() => {
     // TODO: リスタート時にタブが復活する設定を回避できたら嬉しい
-    if (!smallWindowOpened) {
+    if (!smallWindowOpened &&router.isReady) {
       openWindow();
       setSmallWindowOpened(true);
     }
-    window.close();
-    // window.open("", "_self", "")?.close();
-  }, []);
+    // window.close();
+     window.open("", "_self", "")?.close();
+  }, [router]);
 
   return (
     <Flex direction="column" w="full" h="100vh" px={8}>

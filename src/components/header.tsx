@@ -1,8 +1,11 @@
 import { Box, Button, Flex, Spacer, Text, Tooltip, useClipboard } from '@chakra-ui/react';
 
+const baseUrl: string = 'https://meerchat.vercel.app/';
+// const baseUrl: string = 'http://localhost:3000';
+
 // 上部のヘッダー
 const Header = ({ meetingId }: { meetingId: string }) => {
-  const audienceUrl: string = `http://localhost:3000/audience?id=${meetingId}`;
+  const audienceUrl: string = `${baseUrl}/audience?id=${meetingId}`;
   const { hasCopied, onCopy } = useClipboard(audienceUrl);
 
   const onClickUrl = () => {
@@ -17,7 +20,7 @@ const Header = ({ meetingId }: { meetingId: string }) => {
       const screenX = 0;
       const screenY = 0;
       const _smallWindow = window.open(
-        `http://localhost:3000/speaker-display?id=${meetingId}`,
+        `${baseUrl}/speaker-display?id=${meetingId}`,
         'speaker',
         `width=${width},height=${height},screenY=${screenY},screenX=${screenX},toolbar=no,menubar=no,scrollbars=no`,
       );

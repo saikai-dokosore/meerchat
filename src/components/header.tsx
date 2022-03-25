@@ -48,7 +48,7 @@ const Header = ({ meetingId }: { meetingId: string }) => {
             openSpeakerDisplay(meetingId);
           }}
         >
-          スーパーチャット欄
+          スーパーチャット欄を開く
         </Button>
       </Flex>
     </Flex>

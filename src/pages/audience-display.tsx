@@ -42,10 +42,14 @@ const AudienceDisplay: NextPage = () => {
   }, [windowIsExpanded]);
 
   const addNewComment = async (): Promise<void> => {
-    setLoading(true);
-    const commentsCollectionRef = collection(db, 'meetings', _meetingId, 'comments');
-    const addComment = await addDoc(commentsCollectionRef, { comments: newComment, superChat: newSuperChat, createdAt: Timestamp.now() });
-    setLoading(false);
+    if (newComment != '') {
+      setLoading(true);
+      const commentsCollectionRef = collection(db, 'meetings', _meetingId, 'comments');
+      const addComment = await addDoc(commentsCollectionRef, { comment: newComment, superChat: newSuperChat, createdAt: Timestamp.now() });
+      setLoading(false);
+    } else {
+      alert('コメントが空です!');
+    }
   };
 
   const fetchCommentsList = async (): Promise<Comment[]> => {
@@ -94,6 +98,7 @@ const AudienceDisplay: NextPage = () => {
         value={newComment}
         onChange={(event) => {
           setNewComment(event.target.value);
+          console.log(newComment);
         }}
         focusBorderColor="teal.400"
         placeholder="ここに質問を書いてね"
@@ -103,12 +108,18 @@ const AudienceDisplay: NextPage = () => {
       <Flex my="8" alignItems="center">
         <Text>金額</Text>
         <Spacer />
-        <NumberInput id="super" value={'¥ ' + newSuperChat.toString()} step={100} focusBorderColor="teal.400" borderColor="gray.300">
-          <NumberInputField
-            onChange={(event) => {
-              setNewSuperChat(parseInt(event.target.value));
-            }}
-          />
+        <NumberInput
+          id="super"
+          value={'¥' + newSuperChat.toString()}
+          step={100}
+          focusBorderColor="teal.400"
+          borderColor="gray.300"
+          onChange={(str: string) => {
+            setNewSuperChat(parseInt(str.replace(/^\¥/, '')));
+            console.log(newSuperChat);
+          }}
+        >
+          <NumberInputField />
           <NumberInputStepper>
             <NumberIncrementStepper color="green.400" />
             <NumberDecrementStepper color="red.400" />

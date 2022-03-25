@@ -14,6 +14,7 @@ import {
   DocumentSnapshot,
   getDoc,
   setDoc,
+  Timestamp,
 } from "firebase/firestore";
 import { NextPage } from "next";
 import router from "next/router";
@@ -52,10 +53,10 @@ const Index: NextPage = () => {
     if (!meetingExists) {
       const meetingDocRef = doc(db, "meetings", meetingId);
       const setNewMeeting = await setDoc(meetingDocRef, {
-        createdAt: Date.now(),
+        createdAt: Timestamp.now(),
       });
     }
-    router.push("/" + meetingId + "/speaker");
+    router.push("/" + meetingId);
   };
 
   return (

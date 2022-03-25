@@ -5,10 +5,10 @@ export interface Meeting {
   createdAt: Date;
 }
 
-export const MeetingFromDoc = (doc: QueryDocumentSnapshot<DocumentData>) => {
+export const meetingFromDoc = (doc: QueryDocumentSnapshot<DocumentData>) => {
   const meeting: Meeting = {
     meetingId: doc.id,
-    createdAt: doc.data()["createdAt"],
+    createdAt: doc.data()["createdAt"].toDate(),
   };
   return meeting;
 };
